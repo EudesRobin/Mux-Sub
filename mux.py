@@ -1,8 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+# Global imports
+import os,sys
+
 def mux(dir,mkvmerge):
-    import glob, os, re, sys
+    import glob, re
     
     if os.path.isdir(dir):
         sub = sorted(glob.glob(os.path.join(dir,"*.srt")),key=str.lower)
@@ -57,7 +60,6 @@ def mux(dir,mkvmerge):
 # https://stackoverflow.com/questions/377017/test-if-executable-exists-in-python/377028#377028
 # Test if executable exists in Path
 def which(program):
-    import os
     def is_exe(fpath):
         return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
 
@@ -75,7 +77,7 @@ def which(program):
     return None
 
 if __name__ == "__main__":
-    import sys, getopt, os
+    import getopt
 
     try:
         opts, args = getopt.getopt(sys.argv[1:],"hd:",["--directory"])
