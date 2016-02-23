@@ -48,9 +48,9 @@ Exemple
     	└───My.tv_serie.S01E01.VOSTFR.1080p.WEB-DL-Team.mkv
 Links
 -------
-[Download Python](https://www.python.org/downloads/)
-[Download MkvToolnix](https://mkvtoolnix.download/downloads.html)
-[mkvmerge documentation](https://mkvtoolnix.download/doc/mkvmerge.html)
+- [Download Python](https://www.python.org/downloads/)
+- [Download MkvToolnix](https://mkvtoolnix.download/downloads.html)
+- [mkvmerge documentation](https://mkvtoolnix.download/doc/mkvmerge.html)
 
 License
 -------
