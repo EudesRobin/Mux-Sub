@@ -18,6 +18,7 @@ def mux(dir,mkvmerge):
 
             if not os.path.exists(dir+'_vostfr'):
                 os.makedirs(dir+'_vostfr')
+                print(dir+'_vostfr created')
             else:
                 print(dir+'_vostfr already existing')
             
