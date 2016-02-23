@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Global imports
-import os,sys
+import os, sys
 
 def mux(dir,mkvmerge):
     import glob, re
