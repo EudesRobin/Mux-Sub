@@ -44,6 +44,6 @@ Links
 -------
 [mkvmerge documentation](https://mkvtoolnix.download/doc/mkvmerge.html)
 
-Licence
+License
 -------
 [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.fr.html)
