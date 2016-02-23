@@ -35,11 +35,11 @@ Exemple
 
     C:\TV
     ├───My.tv_serie.S01.1080p.WEB-DL-Team
-    │   My.tv_serie.S01E01.1080p.WEB-DL-Team.mkv
-    │   My.tv_serie.S01E01.1080p.WEB-DL-Team.srt
+    │   ├───My.tv_serie.S01E01.1080p.WEB-DL-Team.mkv
+    │   └───My.tv_serie.S01E01.1080p.WEB-DL-Team.srt
     │
     └───My.tv_serie.S01.VOSTFR.1080p.WEB-DL-Team
-    My.tv_serie.S01E01.VOSTFR.1080p.WEB-DL-Team.mkv
+    	└───My.tv_serie.S01E01.VOSTFR.1080p.WEB-DL-Team.mkv
 Links
 -------
 [mkvmerge documentation](https://mkvtoolnix.download/doc/mkvmerge.html)
