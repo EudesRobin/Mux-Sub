@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 def mux(dir,mkvmerge):
-    import glob, os
+    import glob, os, re, sys
     
     if os.path.isdir(dir):
         sub = sorted(glob.glob(os.path.join(dir,"*.srt")),key=str.lower)
@@ -15,26 +15,43 @@ def mux(dir,mkvmerge):
             
         # we are ready to mux theses files
         else:
-
-            if not os.path.exists(dir+'_vostfr'):
-                os.makedirs(dir+'_vostfr')
-                print(dir+'_vostfr created')
-            else:
-                print(dir+'_vostfr already existing')
+            # output dir name
+            result = re.split('([S][0-9]{1,2}.)+',os.path.basename(dir),flags=re.IGNORECASE)
+            if len(result)!=3:
+                print('Regex fail to split folder name in 3 parts : title_serie - saison - tech/team ')
+                return sys.exit(1)
+                
+            outputdir = os.path.join(os.path.dirname(dir),result[0]+result[1]+'VOSTFR.'+result[2])
             
+            # creation output dir
+            if not os.path.exists(outputdir):
+                os.makedirs(outputdir)
+                print(outputdir +' created')
+            else:
+                print(outputdir+' already existing')
+            
+            # we can proceed...
             for itemvid,itemsub in zip(vid,sub):
-                output_filepath = os.path.join(dir+'_vostfr',os.path.splitext(os.path.basename(itemvid))[0]+'_vostfr.mkv')
-                if os.path.exists(output_filepath):
-                    print(os.path.basename(output_filepath)+' skipped, already existing')
+                # output file name 
+                result = re.split('([S][0-9]{1,2}[E][0-9]{1,2}.)+',os.path.basename(itemvid),flags=re.IGNORECASE)
+                if len(result)!=3:
+                    print('Regex fail to split video filename in 3 parts : title_serie - saison - tech/team ')
+                    sys.exit(1)
+               
+                outputfile = os.path.join(outputdir,result[0]+result[1]+'VOSTFR.'+result[2])
+                
+                # mux
+                if os.path.exists(outputfile):
+                    print(os.path.basename(outputfile)+' skipped, already existing')
                 else:
                     opt_original = '--no-global-tags'
                     opt_sub= '--language 0:fre --default-track 0:yes'
-                    os.system(mkvmerge+' --output'+' "'+output_filepath+'" '+opt_original+' "'+itemvid+'" '+opt_sub+' "'+itemsub+'" ')
+                    os.system(mkvmerge+' --output'+' "'+outputfile+'" '+opt_original+' "'+itemvid+'" '+opt_sub+' "'+itemsub+'" ')
                     
             return 0
     else:
         print("the submited path is not a directory")
-        return system.exit(1)
+        return sys.exit(1)
 
         
 # https://stackoverflow.com/questions/377017/test-if-executable-exists-in-python/377028#377028
