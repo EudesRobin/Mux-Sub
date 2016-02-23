@@ -62,14 +62,14 @@ if __name__ == "__main__":
     try:
         opts, args = getopt.getopt(sys.argv[1:],"hd:",["--directory"])
         if len(sys.argv)==1:
-            print('Usage :\nmux.py -d <directory containing subtitles and mkv videos>')
+            os.system('python mux.py -h')
             sys.exit(0)
     except getopt.GetoptError:
-        print('mux.py -d <directory>')
+        os.system('python mux.py -h')
         sys.exit(2)
     for opt, arg in opts:
-        if opt == '-h':
-            print('mux.py -d <directory containing subtitles and mkv videos>')
+        if opt in ("-h","--help"):
+            print('Usage : mux.py [options]\n-d [--directory] <path to directory containing srt subtitles and mkv videos>\nNote: Double quotes arond the path are recommanded, to avoid any troubles with spaces.\n-h [--help] will print this help')
             sys.exit()
         elif opt in ("-d", "--directory"):
             # define which executable call...
