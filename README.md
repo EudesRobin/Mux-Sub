@@ -10,6 +10,12 @@ Robin Eudes
 
 ---------- 
 
+Requirements
+------------
+- Python binaries in your PATH (I used Python 3.5.1)
+- Mkvmerge binary in your PATH
+
+
 How to use it
 ----------
     Usage : mux.py [options]
@@ -42,6 +48,8 @@ Exemple
     	└───My.tv_serie.S01E01.VOSTFR.1080p.WEB-DL-Team.mkv
 Links
 -------
+[Download Python](https://www.python.org/downloads/)
+[Download MkvToolnix](https://mkvtoolnix.download/downloads.html)
 [mkvmerge documentation](https://mkvtoolnix.download/doc/mkvmerge.html)
 
 License
