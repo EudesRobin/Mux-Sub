@@ -5,7 +5,7 @@
 import os, sys
 
 def mux(dir,mkvmerge):
-    import glob, re
+    import glob, re, subprocess
     
     if os.path.isdir(dir):
         sub = sorted(glob.glob(os.path.join(dir,"*.srt")),key=str.lower)
@@ -33,6 +33,8 @@ def mux(dir,mkvmerge):
             else:
                 print(outputdir+' already existing')
             
+            # a simple log file 
+            log = open(os.path.join(outputdir,"log.txt"),'a')
             # we can proceed...
             for itemvid,itemsub in zip(vid,sub):
                 # output file name 
@@ -49,8 +51,12 @@ def mux(dir,mkvmerge):
                 else:
                     opt_original = '--no-global-tags'
                     opt_sub= '--language 0:fre --default-track 0:yes'
-                    os.system(mkvmerge+' --output'+' "'+outputfile+'" '+opt_original+' "'+itemvid+'" '+opt_sub+' "'+itemsub+'" ')
+                    print('working on '+outputfile)
+                    result = subprocess.check_output(mkvmerge+' --output'+' "'+outputfile+'" '+opt_original+' "'+itemvid+'" '+opt_sub+' "'+itemsub+'" ', shell=True, stderr=subprocess.STDOUT)
+                    clean_res = re.sub('(Progress: [0-9]{1,2}%(\r\n|\r|\n))|(\r)|(^\n$)', '', result.decode("utf-8"))
+                    log.write(clean_res)
                     
+            log.close()    
             return 0
     else:
         print("the submited path is not a directory")
