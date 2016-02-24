@@ -1,12 +1,12 @@
-Mux your serie subtitles - all season - in one call
-========================================
+Mux all season episodes with subtitles files
+============================================
 
 **Author :**
 Robin Eudes
 
 ----------
 
-> A simple python script to mux season subtitles, using mkvmerge.
+> A simple python script to mux episodes with their associated subtitle file, using mkvmerge.
 
 ---------- 
 
