@@ -9,14 +9,16 @@ def mux(dir,mkvmerge):
     
     if os.path.isdir(dir):
         sub = []
-        sub.extend(sorted(glob.glob(os.path.join(dir,"*.srt")),key=str.lower))
-        sub.extend(sorted(glob.glob(os.path.join(dir,"*.ass")),key=str.lower))
+        sub.extend(glob.glob(os.path.join(dir,"*.srt")))
+        sub.extend(glob.glob(os.path.join(dir,"*.ass")))
+        sub = sorted(sub,key=str.lower)
         
         vid = []
-        vid.extend(sorted(glob.glob(os.path.join(dir,"*.mkv")),key=str.lower))
-        vid.extend(sorted(glob.glob(os.path.join(dir,"*.mp4")),key=str.lower))
-        vid.extend(sorted(glob.glob(os.path.join(dir,"*.avi")),key=str.lower))
-        vid.extend(sorted(glob.glob(os.path.join(dir,"*.ts")),key=str.lower))
+        vid.extend(glob.glob(os.path.join(dir,"*.mkv")))
+        vid.extend(glob.glob(os.path.join(dir,"*.mp4")))
+        vid.extend(glob.glob(os.path.join(dir,"*.avi")))
+        vid.extend(glob.glob(os.path.join(dir,"*.ts")))
+        vid = sorted(vid,key=str.lower)
         
         # check if the directory contains the right files
         if len(sub)!=len(vid):
