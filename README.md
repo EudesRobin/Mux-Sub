@@ -47,6 +47,21 @@ Exemple
     └───My.tv_serie.S01.VOSTFR.1080p.WEB-DL-Team
     	├───My.tv_serie.S01E01.VOSTFR.1080p.WEB-DL-Team.mkv
 		└───log.txt
+
+Docker container
+-------
+### Default behaviour (-d [--directory] option)
+`docker run --rm -v /patent_dir/:/usr/src/mux-mkv_srt/source/ benoitbrayer/mux-mkv_srt`
+
+parent_dir: The parent directory of My.tv_serie.S01.1080p.WEB-DL-Team directory
+
+`docker run -v ~/My.tv_serie.S01.1080p.WEB-DL-Team directory/..:/usr/src/mux-mkv_srt/source/ benoitbrayer/mux-mkv_srt`
+
+This syntax is ok too.
+
+### Any other behaviour (Example using -h [--help] option)
+`docker run benoitbrayer/mux-mkv_srt -h`
+
 Links
 -------
 - [Download Python](https://www.python.org/downloads/)
