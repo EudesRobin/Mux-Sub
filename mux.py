@@ -8,23 +8,31 @@ def mux(dir,mkvmerge):
     import glob, re, subprocess
     
     if os.path.isdir(dir):
-        sub = sorted(glob.glob(os.path.join(dir,"*.srt")),key=str.lower)
-        vid = sorted(glob.glob(os.path.join(dir,"*.mkv")),key=str.lower)
+        sub = []
+        sub.extend(sorted(glob.glob(os.path.join(dir,"*.srt")),key=str.lower))
+        sub.extend(sorted(glob.glob(os.path.join(dir,"*.ass")),key=str.lower))
+        
+        vid = []
+        vid.extend(sorted(glob.glob(os.path.join(dir,"*.mkv")),key=str.lower))
+        vid.extend(sorted(glob.glob(os.path.join(dir,"*.mp4")),key=str.lower))
+        vid.extend(sorted(glob.glob(os.path.join(dir,"*.avi")),key=str.lower))
+        vid.extend(sorted(glob.glob(os.path.join(dir,"*.ts")),key=str.lower))
         
         # check if the directory contains the right files
         if len(sub)!=len(vid):
             print('missing subtitle or video file')
             sys.exit(1)
-            
+        
         # we are ready to mux theses files
         else:
             # output dir name
-            result = re.split('([S][0-9]{1,2}.)+',os.path.basename(dir),flags=re.IGNORECASE)
-            if len(result)!=3:
+            outputdirwithdot = re.sub(' ', '.', os.path.basename(dir))  
+            resultsplit = re.split('([S][0-9]{1,2}.)+',outputdirwithdot,flags=re.IGNORECASE)
+            if len(resultsplit)!=3:
                 print('Regex fail to split folder name in 3 parts : title_serie - saison - tech/team ')
                 return sys.exit(1)
-                
-            outputdir = os.path.join(os.path.dirname(dir),result[0]+result[1]+'VOSTFR.'+result[2])
+            
+            outputdir = os.path.join(os.path.dirname(dir),resultsplit[0]+resultsplit[1]+'VOSTFR.'+resultsplit[2])
             
             # creation output dir
             if not os.path.exists(outputdir):
@@ -37,13 +45,14 @@ def mux(dir,mkvmerge):
             log = open(os.path.join(outputdir,"log.txt"),'a')
             # we can proceed...
             for itemvid,itemsub in zip(vid,sub):
-                # output file name 
-                result = re.split('([S][0-9]{1,2}[E][0-9]{1,2}.)+',os.path.basename(itemvid),flags=re.IGNORECASE)
-                if len(result)!=3:
-                    print('Regex fail to split video filename in 3 parts : title_serie - saison - tech/team ')
+                # output file name
+                resultwithdot = re.sub('\s', '.', os.path.basename(itemvid)) 
+                resultsplit = re.split('([S][0-9]{1,2}[E][0-9]{1,2}.)+',resultwithdot,flags=re.IGNORECASE)
+                if len(resultsplit)!=3:
+                    print('Regex fail to split video filename in 3 parts : title_serie - saison/episode - tech/team ')
                     sys.exit(1)
-               
-                outputfile = os.path.join(outputdir,result[0]+result[1]+'VOSTFR.'+result[2])
+                
+                outputfile = os.path.splitext(os.path.join(outputdir,resultsplit[0]+resultsplit[1]+'VOSTFR.'+resultsplit[2]))[0]+'.mkv'
                 
                 # mux
                 if os.path.exists(outputfile):

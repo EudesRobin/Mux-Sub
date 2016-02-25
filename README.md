@@ -19,9 +19,16 @@ Requirements
 How to use it
 ----------
     Usage : mux.py [options]
-    -d [--directory] <path to directory containing srt subtitles and mkv videos>
+    -d [--directory] <path to directory containing subtitles and videos>
     Note: Double quotes arond the path are recommanded, to avoid any troubles with spaces.
     -h [--help] will print this help
+
+supported formats
+-----------------
+- .srt or .ass subtitles files
+- .mkv ; .avi ; .mp4 ; .ts video files
+
+The output file will always be .mkv
 
 Exemple
 -------
@@ -51,16 +58,16 @@ Exemple
 Docker container
 -------
 ### Default behaviour (-d [--directory] option)
-`docker run --rm -v /patent_dir/:/usr/src/mux-mkv_srt/source/ benoitbrayer/mux-mkv_srt`
+    `docker run --rm -v /patent_dir/:/usr/src/mux-mkv_srt/source/ benoitbrayer/mux-mkv_srt`
 
 parent_dir: The parent directory of My.tv_serie.S01.1080p.WEB-DL-Team directory
 
-`docker run -v ~/My.tv_serie.S01.1080p.WEB-DL-Team directory/..:/usr/src/mux-mkv_srt/source/ benoitbrayer/mux-mkv_srt`
+    `docker run -v ~/My.tv_serie.S01.1080p.WEB-DL-Team directory/..:/usr/src/mux-mkv_srt/source/ benoitbrayer/mux-mkv_srt`
 
 This syntax is ok too.
 
 ### Any other behaviour (Example using -h [--help] option)
-`docker run benoitbrayer/mux-mkv_srt -h`
+    `docker run benoitbrayer/mux-mkv_srt -h`
 
 Links
 -------
