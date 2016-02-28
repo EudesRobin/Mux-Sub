@@ -22,7 +22,7 @@ def mux(dir,mkvmerge):
         
         # check if the directory contains the right files
         if len(sub)!=len(vid):
-            print('missing subtitle or video file')
+            uprint('missing subtitle or video file')
             sys.exit(1)
         
         # we are ready to mux theses files
@@ -31,7 +31,7 @@ def mux(dir,mkvmerge):
             outputdirwithdot = re.sub(' ', '.', os.path.basename(dir))  
             resultsplit = re.split('([S][0-9]{1,2}.)+',outputdirwithdot,flags=re.IGNORECASE)
             if len(resultsplit)!=3:
-                print('Regex fail to split folder name in 3 parts : title_serie - saison - tech/team ')
+                uprint('Regex fail to split folder name in 3 parts : title_serie - saison - tech/team ')
                 return sys.exit(1)
             
             outputdir = os.path.join(os.path.dirname(dir),resultsplit[0]+resultsplit[1]+'VOSTFR.'+resultsplit[2])
@@ -39,9 +39,9 @@ def mux(dir,mkvmerge):
             # creation output dir
             if not os.path.exists(outputdir):
                 os.makedirs(outputdir)
-                print(outputdir +' created')
+                uprint(outputdir +' created')
             else:
-                print(outputdir+' already existing')
+                uprint(outputdir+' already existing')
             
             # a simple log file 
             log = open(os.path.join(outputdir,"log.txt"),'a')
@@ -51,27 +51,38 @@ def mux(dir,mkvmerge):
                 resultwithdot = re.sub('\s', '.', os.path.basename(itemvid)) 
                 resultsplit = re.split('([S][0-9]{1,2}[E][0-9]{1,2}.)+',resultwithdot,flags=re.IGNORECASE)
                 if len(resultsplit)!=3:
-                    print('Regex fail to split video filename in 3 parts : title_serie - saison/episode - tech/team ')
+                    uprint('Regex fail to split video filename in 3 parts : title_serie - saison/episode - tech/team ')
                     sys.exit(1)
                 
                 outputfile = os.path.splitext(os.path.join(outputdir,resultsplit[0]+resultsplit[1]+'VOSTFR.'+resultsplit[2]))[0]+'.mkv'
                 
                 # mux
                 if os.path.exists(outputfile):
-                    print(os.path.basename(outputfile)+' skipped, already existing')
+                    uprint(os.path.basename(outputfile)+' skipped, already existing')
                 else:
                     opt_original = '--no-global-tags'
                     opt_sub= '--language 0:fre --default-track 0:yes'
-                    print('working on '+outputfile)
+                    uprint('working on '+outputfile)
                     result = subprocess.check_output(mkvmerge+' --output'+' "'+outputfile+'" '+opt_original+' "'+itemvid+'" '+opt_sub+' "'+itemsub+'" ', shell=True, stderr=subprocess.STDOUT)
                     clean_res = re.sub('(Progress: [0-9]{1,2}%(\r\n|\r|\n))|(\r)|(^\n$)', '', result.decode("utf-8"))
-                    log.write(clean_res)
+                    uprint(clean_res,file=log)
                     
             log.close()    
             return 0
     else:
-        print("the submited path is not a directory")
+        uprint("the submited path is not a directory")
         return sys.exit(1)
+
+        
+# https://stackoverflow.com/questions/14630288/unicodeencodeerror-charmap-codec-cant-encode-character-maps-to-undefined/29988426#29988426
+# to avoid UnicodeEncodeError with windows terminal...
+def uprint(*objects, sep=' ', end='\n', file=sys.stdout):
+    enc = file.encoding
+    if enc == 'UTF-8':
+        print(*objects, sep=sep, end=end, file=file)
+    else:
+        f = lambda obj: str(obj).encode(enc, errors='replace').decode(enc)
+        print(*map(f, objects), sep=sep, end=end, file=file)
 
         
 # https://stackoverflow.com/questions/377017/test-if-executable-exists-in-python/377028#377028
@@ -116,7 +127,7 @@ if __name__ == "__main__":
             mkvmerge = executable[os.name]
             
             if which(mkvmerge) is None:
-                print('mkvmerge executable not found in your path')
+                uprint('mkvmerge executable not found in your path')
                 sys.exit(1)
             else:
                 mux(os.path.normpath(arg),mkvmerge)
