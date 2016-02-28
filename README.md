@@ -23,7 +23,14 @@ How to use it
     Note: Double quotes arond the path are recommanded, to avoid any troubles with spaces.
     -h [--help] will print this help
 
-supported formats
+
+Video files and subtitle files are sorted in lexical order, no case sensitive, in 2 separated lists. You can name them as your wish. Just know that for each mux loop iteration, the script will take the current item in both lists.
+
+eg. The first subtitle will be mux with the first video file, and so on. 
+
+You can check log file to be sure that the right files have been muxed together.
+
+Supported formats
 -----------------
 - .srt or .ass subtitles files
 - .mkv ; .avi ; .mp4 ; .ts video files
@@ -74,6 +81,7 @@ Links
 - [Download Python](https://www.python.org/downloads/)
 - [Download MkvToolnix](https://mkvtoolnix.download/downloads.html)
 - [mkvmerge documentation](https://mkvtoolnix.download/doc/mkvmerge.html)
+- [Docker](https://www.docker.com/)
 
 License
 -------
