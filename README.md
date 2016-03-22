@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/EudesRobin/Mux-Sub.svg?branch=master)](https://travis-ci.org/EudesRobin/Mux-Sub)
+
 Mux all season episodes with subtitles files
 ============================================
 
